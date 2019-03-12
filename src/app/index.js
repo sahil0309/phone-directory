@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Header } from '../header/index';
-import PhoneDirectory from '../phoneDirectory/index';
-import  AddContact  from '../addContact/index';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import Header from '../header/index';
+import PhoneDirectory from '../phoneDirectory';
+import AddContact from '../addContact';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './style.css';
+import NotFound from '../notFound';
 
-export class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +16,7 @@ export class App extends Component {
     }
   }
   /* I would have preferred using State Management Libarary like Redux, If this would be 
-     an application with multiple elements in state, instead of lifting state up.
+     an application with multiple properties in state, instead of lifting state up.
   */
 
   deleteContact = (contactIndex) => {
@@ -25,26 +26,27 @@ export class App extends Component {
     this.setState({ contacts });
   }
 
-  addContact=(contact)=>{
+  addContact = (contact) => {
     let contacts = this.state.contacts;
     contacts.push(contact);
     this.setState({ contacts });
   }
+
   render() {
     return (
       <React.Fragment>
         <Header />
         <div className="container">
           <Router>
-            <React.Fragment>
+            <Switch>
               <Route exact path="/"
                 component={() => <PhoneDirectory contacts={this.state.contacts} deleteContact={this.deleteContact} />} />
-              <Route exact path="/add" component={() => <AddContact addContact={this.addContact} />} />
-              
-            </React.Fragment>
+              <Route path="/add" component={() => <AddContact addContact={this.addContact} />} />
+              <Route component={NotFound}></Route>
+            </Switch>
           </Router>
         </div>
       </React.Fragment>
-  )     
-  }  
+    )
+  }
 }
