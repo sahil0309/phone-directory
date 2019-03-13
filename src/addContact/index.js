@@ -34,7 +34,7 @@ class AddContact extends Component {
   }
 
   validateName = () => {
-    let nameValidation = /^[A-Za-z]+$/;
+    let nameValidation = /^[A-Za-z ]+$/;
     if (this.state.name.match(nameValidation))
       this.setState({
         nameError: null
