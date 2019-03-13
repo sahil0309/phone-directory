@@ -37,7 +37,7 @@ export default class App extends Component {
       <React.Fragment>
         <Header />
         <div className="container">
-          <Router>
+          <Router basename={process.env.PUBLIC_URL}>
             <Switch>
               <Route exact path="/"
                 component={() => <PhoneDirectory contacts={this.state.contacts} deleteContact={this.deleteContact} />} />
